@@ -100,10 +100,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 		    .bigPicture(bitmap_image)
 		    .bigLargeIcon(bitmap_image)
 		    .setBigContentTitle(title)
-		    .setSummaryText("Test");
+		    .setSummaryText("Test from fcmplugin Android code");
 
 
-		NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
+		NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
 			.setSmallIcon(getApplicationInfo().icon)
 			.setContentTitle(title)
 			.setContentText(messageBody)
@@ -111,7 +111,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 			.setSound(defaultSoundUri)
 			.setContentIntent(pendingIntent)
 			.setLargeIcon(bitmap_image)
-			.setStyle(style)
+			.setStyle(style);
 			//.build();
 
 
