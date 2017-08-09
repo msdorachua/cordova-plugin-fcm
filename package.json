@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/fechanique/cordova-plugin-fcm"
+    "url": "https://github.com/msdorachua/cordova-plugin-fcm.git"
   },
   "keywords": [
     "ecosystem:cordova",
