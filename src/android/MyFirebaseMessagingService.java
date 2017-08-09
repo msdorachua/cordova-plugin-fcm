@@ -20,6 +20,7 @@ import java.net.HttpURLConnection;
 import java.io.InputStream;
 import android.graphics.BitmapFactory;
 import java.io.IOException;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by Felipe Echanique on 08/06/2016.
@@ -91,30 +92,35 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 PendingIntent.FLAG_ONE_SHOT);
 
         //get the bitmap to show in notification bar
-        Bitmap bitmap_image = getBitmapFromURL("http://pullupstand.com/wp-content/uploads/2015/07/nationaldaybanner-ndp04-1.png");
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.BigPictureStyle style = new NotificationCompat.BigPictureStyle()
-            .bigPicture(bitmap_image)
-	    .bigLargeIcon(bitmap_image)
-	    .setBigContentTitle(title)
-            .setSummaryText("Test");
-	    
-        
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
-                notificationBuilder.setSmallIcon(getApplicationInfo().icon)
-                .setContentTitle(title)
-                .setContentText(messageBody)
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent)
-		.setLargeIcon(bitmap_image)
-                .setStyle(style)
-                .build();
-     
+        //Bitmap bitmap_image = getBitmapFromURL("http://pullupstand.com/wp-content/uploads/2015/07/nationaldaybanner-ndp04-1.png");
+        try{
+		Bitmap bitmap_image = Picasso.with(this).load("http://pullupstand.com/wp-content/uploads/2015/07/nationaldaybanner-ndp04-1.png").get();
+		Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+		NotificationCompat.BigPictureStyle style = new NotificationCompat.BigPictureStyle()
+		    .bigPicture(bitmap_image)
+		    .bigLargeIcon(bitmap_image)
+		    .setBigContentTitle(title)
+		    .setSummaryText("Test");
 
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
-    }
-}
+		NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
+			.setSmallIcon(getApplicationInfo().icon)
+			.setContentTitle(title)
+			.setContentText(messageBody)
+			.setAutoCancel(true)
+			.setSound(defaultSoundUri)
+			.setContentIntent(pendingIntent)
+			.setLargeIcon(bitmap_image)
+			.setStyle(style)
+			//.build();
+
+
+		NotificationManager notificationManager =
+			(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+		notificationManager.notify(1029 /* ID of notification */, notificationBuilder.build());
+	} catch (IOException e) {
+            e.printStackTrace();
+        } //end catch
+    }//end sendNotification(
+} //end class
