@@ -99,12 +99,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
                 notificationBuilder.setSmallIcon(getApplicationInfo().icon)
+		
                 .setContentTitle(title)
                 .setContentText(messageBody)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent)
-                .setStyle(style)
+                .setStyle(new Notification.BigPictureStyle().bigPicture(aBigBitmap))
                 .build();
      
 
