@@ -105,7 +105,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent)
-                .setStyle(new Notification.BigPictureStyle().bigPicture(aBigBitmap))
+		.setLargeIcon(bitmap_image)
+                .setStyle(new Notification.BigPictureStyle().bigPicture(bitmap_image))
                 .build();
      
 
