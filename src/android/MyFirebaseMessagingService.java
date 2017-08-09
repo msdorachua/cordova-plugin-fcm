@@ -14,6 +14,13 @@ import java.util.HashMap;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import android.graphics.Bitmap;
+import java.net.URL;
+import java.net.HttpURLConnection;
+import java.io.InputStream;
+import android.graphics.BitmapFactory;
+import java.io.IOException;
+
 /**
  * Created by Felipe Echanique on 08/06/2016.
  */
@@ -54,6 +61,21 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
     // [END receive_message]
 
+    public static Bitmap getBitmapFromURL(String imgUrl) {
+        try {
+            URL url = new URL(imgUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            return myBitmap;
+        } catch (IOException e) {
+            // Log exception
+            return null;
+        }
+    } // getBitmapFromURL
+
     /**
      * Create and show a simple notification containing the received FCM message.
      *
@@ -68,14 +90,23 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
+        //get the bitmap to show in notification bar
+        Bitmap bitmap_image = getBitmapFromURL("http://pullupstand.com/wp-content/uploads/2015/07/nationaldaybanner-ndp04-1.png");
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(getApplicationInfo().icon)
+        NotificationCompat.BigPictureStyle style = new NotificationCompat.BigPictureStyle()
+            .bigPicture(bitmap_image)
+            .setSummaryText("Test");
+        
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
+                notificationBuilder.setSmallIcon(getApplicationInfo().icon)
                 .setContentTitle(title)
                 .setContentText(messageBody)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
+                .setContentIntent(pendingIntent)
+                .setStyle(style)
+                .build();
+     
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
