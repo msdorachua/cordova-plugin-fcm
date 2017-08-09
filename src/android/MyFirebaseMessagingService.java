@@ -48,7 +48,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 		}
 		
 		Map<String, String> data = new HashMap<String,String>();
-		data.put("wasTapped", false);
+		data.put("wasTapped", "false");
 		for (String key : remoteMessage.getData().keySet()) {
                 String value = remoteMessage.getData().get(key);
                 Log.d(TAG, "\tKey: " + key + " Value: " + value);
